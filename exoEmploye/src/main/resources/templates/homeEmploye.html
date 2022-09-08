@@ -3,7 +3,12 @@
 <head>
 <meta charset="ISO-8859-1">
 <!-- CSS only -->
+<!-- version avec lien cdn  
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+-->
+<!--  version avec fichier bootstrap dans le projet en *static/css* css sans avoir de connexion internet -->
+<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+
 <!-- JavaScript Bundle with Popper -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
 <title>HomeEmploye</title>
@@ -13,7 +18,33 @@
 <h4>Bonjour les gars,</h4>
 <br> 
 <br>
-<div>
+<!-- Modal -->
+			<div class="modal fade" th:each="worker:${workers}" id="updtWorker_${worker.id}"
+				tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title text-dark" id="exampleModalLabel">Worker
+								- Suppression</h5>
+							<button type="button" class="btn-close" data-bs-dismiss="modal"
+								aria-label="Close"></button>
+						</div>
+						<div class="modal-body">
+							<b>Voulez vous supprimer le salarie:</b>
+							<p>${worker.nom }</p>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary"
+								data-bs-dismiss="modal">Non</button>
+							<a  th:href="@{'/delete/'+${worker.id}}">
+								<button type="button" class="btn btn-danger"
+									style="background-color: red !important;" name="deleteProd">
+									Oui</button>
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
 
 <table class="table">
   <thead>
@@ -29,6 +60,8 @@
     </tr>
   </thead>
   <tbody>
+  
+  
     
     <tr th:each="worker:${workers}">
       <th scope="row" th:text="${worker.id}"></th>
@@ -40,15 +73,16 @@
       <a th:href="@{'/workerF/'+${worker.id}}">Edit</a>
       </td>
       <td>
+      <!--  version sans modal
       <a th:href="@{'/delete/'+${worker.id}}">Delete</a>
+      -->
+      <a href="" class="btn btn-hbnani btnSuppUpdt mb-4 " data-bs-toggle="modal" data-bs-target="#updtWorker_${worker.id}">Delete</a>
       </td>
+      
     </tr>
   </tbody>
 </table>
 <hr>
-<div class="container">
-	
-</div>
 
 <div class="container">
 	<form method="post" th:action="@{/homeEmploye}" th:object="${employe}">
@@ -79,5 +113,5 @@
 
 <br>
 <br>
-<div th:replace="fragments/footer::hb"></div>
 </div>
+<div th:replace="fragments/footer::hb"></div>

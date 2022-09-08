@@ -13,14 +13,20 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import com.example.demo.model.Employe;
 import com.example.demo.repository.WorkerRepository;
+import com.example.demo.service.EmployeService;
 
 
 
 @Controller
 public class EmployeController {
+	//Best pracice > passer par un service !
+	/*
+	@Autowired
+	private EmployeService employeService;
+	*/
+	
 	@Autowired
 	private WorkerRepository workerRepo;
-	
 	
 	@GetMapping("/homeEmploye")
 	public String AllHome(Employe worker, Model model) {
@@ -74,9 +80,14 @@ public class EmployeController {
 		return "workerF";
 	}
 	
-	@PostMapping("/workerF/{id}")
+	@PostMapping("/workerF/{id}") 
 	public String Update(@PathVariable(value="id")Long workerId, @Validated Employe worky, Model model, BindingResult bindingResult) {
+		// @Validated va vérifier la concordance des paramètres entrés par rapport  à l'objet ciblé ici Employe
+		//@PathVariable prend la value dans l'url appelé {id} et l'affecte à sa cible workerId de type 'Long'
+		
 		Optional<Employe> travailleur = workerRepo.findById(workerId);
+		//Optonal va donner des posibilités de gestion de la variable récupérée (null, vide, etc...)
+		
 		Employe salarie = null;
 		
 		if(bindingResult.hasErrors()) {
@@ -85,6 +96,8 @@ public class EmployeController {
 		}
 		
 		if(travailleur.isPresent()) {
+			// *.isPresent() est autorisé par 'Optional'
+			
 			salarie = travailleur.get();
 			// vient de Optional permet de 'getter()' toutes les infos du user dont l'ID a été trouvé dans la BDD
 		

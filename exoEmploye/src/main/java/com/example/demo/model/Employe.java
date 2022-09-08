@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
@@ -25,8 +26,8 @@ public class Employe {
 	@NotEmpty(message="Le mail ne doit pas être vide")
 	private String email;
 	
-	
-	private String fonction;
+	@ManyToOne  //Pour créer les cardinalités ici 'Many to One' et donc en BDD > les FOREIGN KEYS
+	private Fonction fonction;
 	
 	
 	//Getters&Settes
@@ -51,10 +52,11 @@ public class Employe {
 	public Long getId() {
 		return id;
 	}
-	public String getFonction() {
+	
+	public Fonction getFonction() {
 		return fonction;
 	}
-	public void setFonction(String fonction) {
+	public void setFonction(Fonction fonction) {
 		this.fonction = fonction;
 	}
 	@Override
