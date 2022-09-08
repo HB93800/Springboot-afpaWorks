@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"> <!-- Pour prendre les thymeLeaf en compte -->
+<div th:replace="fragments/header::header"></div> <!--  Ici j'appelle mon header dans fragments de templates -->
+<head>
+<meta charset="ISO-8859-1">
+<title>About</title>
+</head>
+<body>
+<span th:text=" 'Welcone, je suis ton About'"> 
+</span>
+<br>
+<br>
+<img th:src="@{/images/AFPA.png}"/>
+<br>
+<br>
+<div th:replace="fragments/footer::cda"></div>

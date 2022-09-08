@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:replace="fragments/header::header"></div>
+<head>
+<meta charset="ISO-8859-1">
+<title>Home</title>
+</head>
+<body>
+<br>
+
+
+<div class="container">
+<h4>Bonjour les gars,</h4>
+<br>
+<br>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Nom</th>
+      <th scope="col">Prenom</th>
+      <th scope="col">Email</th>
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr th:each="user:${users}">
+      <th scope="row" th:text="${user.id}"></th>
+      <td th:text="${user.nom}"></td>
+      <td th:text="${user.prenom}"></td>
+      <td th:text="${user.email}"></td>
+      <td>
+      <a th:href="@{'/show/'+${user.id}}">Edit</a>
+      </td>
+      <td>
+      <a th:href="@{'/delete/'+${user.id}}">Delete</a>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<hr>
+<div class="container">
+	<form method="post" th:action="@{/home}" th:object="${user}">
+		<div class="mb-3">
+	  		<label for="exampleFormControlName" class="form-label">Nom</label>
+	  		<input type="text" class="form-control"  placeholder="nom" th:field="*{nom}">
+	  		<!--  equivaut à ecrire l'équivalent de : th:field = >>>> 
+	  		<input type="text" class="form-control"  placeholder="nom" th:field="${user.nom}">
+	  		-->
+	  		<span th:if="${#fields.hasErrors('nom')}" th:errors="*{nom}"></span>
+		</div>
+		<div class="mb-3">
+	  		<label for="exampleFormControlInput1" class="form-label">Prenom</label>
+	  		<input type="text" class="form-control"  placeholder="prenom" th:field="*{prenom}">
+		</div>
+		<div class="mb-3">
+	  		<label for="exampleFormControlInput1" class="form-label">Email address</label>
+	  		<input type="text" class="form-control" placeholder="name@example.com" th:field="*{email}">
+			<span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+		</div>
+		
+	 	<button type="submit" class="btn btn-primary">Submit</button>
+ 	</form>
+</div>
+ 
+<br>
+<br>
+<div th:replace="fragments/footer::afpa"></div>
+</div>
